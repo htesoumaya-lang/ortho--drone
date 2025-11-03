@@ -117,16 +117,14 @@
         </div>
         
         <div class="controls">
-            <button onclick="showView('composite')">Vue Composite</button>
+            <button onclick="showView('composite')">Vue Composite </button>
             <button onclick="showView('single')">Vue Simple</button>
         </div>
 
         <!-- VUE COMPOSITE -->
         <div id="compositeView">
             <div class="image-container">
-                <div class="image-grid" id="imageGrid">
-                    <!-- Tuiles chargées par JS -->
-                </div>
+                <div class="image-grid" id="imageGrid"></div>
             </div>
             <div class="info">
                 <p>Image recomposée à partir de 16 sections haute définition - Affichage unifié</p>
@@ -134,22 +132,26 @@
         </div>
 
         <!-- VUE SIMPLE -->
-        <div id="singleView" class="single-image-container" style="display:none;">
-            <img src="0.png" alt="Vue complète" class="single-image">
+        <div id="singleView" style="display:none;">
+            <div class="single-image-container">
+                <img src="0.png" alt="Vue complète" class="single-image">
+            </div>
+            <div class="info">
+                <p>Vue complète en résolution standard</p>
+            </div>
         </div>
     </div>
 
-    <!-- ✅ Script JavaScript -->
     <script>
-        // Configuration des tuiles
+        // Liste des tuiles (0.png à 15.png)
         const tilePaths = Array.from({length: 16}, (_, i) => `${i}.png`);
 
-        // Charger les tuiles dans la grille
+        // Charger les tuiles
         const grid = document.getElementById('imageGrid');
         tilePaths.forEach((path, index) => {
             const img = document.createElement('img');
             img.src = path;
-            img.alt = `Section ${index}`;
+            img.alt = `Tuile ${index}`;
             img.className = 'tile';
             img.onerror = function() {
                 this.src = 'https://via.placeholder.com/256/ecf0f1/34495e?text=Tuile+' + index;
@@ -157,13 +159,13 @@
             grid.appendChild(img);
         });
 
-        // Contrôle de la vue
+        // Bascule entre les vues
         function showView(viewType) {
             document.getElementById('compositeView').style.display = (viewType === 'composite') ? 'block' : 'none';
             document.getElementById('singleView').style.display = (viewType === 'single') ? 'block' : 'none';
         }
 
-        // Vue par défaut
+        // Vue composite par défaut
         showView('composite');
     </script>
 </body>
