@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Image Drone GeoTIFF</title>
     <style>
         body { 
@@ -45,7 +46,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(4, 1fr);
-            gap: 0; /* Supprimer l'espace entre les tuiles */
+            gap: 0;
             width: 1024px;
             height: 1024px;
             margin: 0 auto;
@@ -116,15 +117,15 @@
         </div>
         
         <div class="controls">
-            <button onclick="showView('composite')">Vue Composite </button>
+            <button onclick="showView('composite')">Vue Composite</button>
             <button onclick="showView('single')">Vue Simple</button>
         </div>
 
-        <!-- VUE COMPOSITE - 16 tuiles recomposées SANS ESPACE -->
+        <!-- VUE COMPOSITE -->
         <div id="compositeView">
             <div class="image-container">
                 <div class="image-grid" id="imageGrid">
-                    <!-- Les 16 tuiles seront chargées par JavaScript -->
+                    <!-- Tuiles chargées par JS -->
                 </div>
             </div>
             <div class="info">
@@ -132,39 +133,16 @@
             </div>
         </div>
 
-        <!-- VUE SIMPLE - Image unique AVEC CADRE -->
-        <div id="singleView" style="display: none;">
-            <div class="single-image-container">
-                <img src="file:///C:/METASHAPE/tuiles_ameliore/0.png" 
-                     alt="Vue complète" 
-                     class="single-image">
-            </div>
-            <div class="info">
-                <p>Vue complète en résolution standard</p>
-            </div>
+        <!-- VUE SIMPLE -->
+        <div id="singleView" class="single-image-container" style="display:none;">
+            <img src="0.png" alt="Vue complète" class="single-image">
         </div>
     </div>
 
+    <!-- ✅ Script JavaScript -->
     <script>
         // Configuration des tuiles
-        const tilePaths = [
-            "file:///C:/METASHAPE/tuiles_ameliore/1_0.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/1.png", 
-            "file:///C:/METASHAPE/tuiles_ameliore/2.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/3.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/4.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/5.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/6.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/7.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/8.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/9.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/10.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/11.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/12.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/13.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/14.png",
-            "file:///C:/METASHAPE/tuiles_ameliore/15.png"
-        ];
+        const tilePaths = Array.from({length: 16}, (_, i) => `${i}.png`);
 
         // Charger les tuiles dans la grille
         const grid = document.getElementById('imageGrid');
@@ -179,18 +157,13 @@
             grid.appendChild(img);
         });
 
-        // Contrôles de vue
+        // Contrôle de la vue
         function showView(viewType) {
-            if (viewType === 'composite') {
-                document.getElementById('compositeView').style.display = 'block';
-                document.getElementById('singleView').style.display = 'none';
-            } else {
-                document.getElementById('compositeView').style.display = 'none';
-                document.getElementById('singleView').style.display = 'block';
-            }
+            document.getElementById('compositeView').style.display = (viewType === 'composite') ? 'block' : 'none';
+            document.getElementById('singleView').style.display = (viewType === 'single') ? 'block' : 'none';
         }
 
-        // Afficher la vue composite par défaut
+        // Vue par défaut
         showView('composite');
     </script>
 </body>
